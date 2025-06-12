@@ -14,10 +14,15 @@ st.set_page_config(page_title="Ximple VS Analytics Dashboard", layout="wide")
 st.title("Ximple VS Analytics Dashboard")
 
 # ----------------------------
+# PALETAS DE COLORES UNIFICADAS
+# ----------------------------
+COLOR_SEQ = px.colors.sequential.Viridis
+COLOR_SEQ_DISCRETE = px.colors.qualitative.Plotly
+
+# ----------------------------
 # LOAD DATA
 # ----------------------------
 @st.cache_data
-
 def load_data():
     df_campaigns = pd.read_csv("Campañas - Aliadas Campaigns.csv")
     df_funnel = pd.read_csv("df_dropped.csv")
@@ -54,7 +59,6 @@ if 'acquisition_path' not in df_campaigns.columns and 'marketing_channel' in df_
     )
 
 # Ensure 'Underwriting overall status' exists in df_campaigns by merging from df_funnel if possible
-# Try to identify the best matching key to merge on
 merge_keys_df_campaigns = ['Ally ID', 'RecipientID', 'user_id']
 merge_key_campaign = next((col for col in merge_keys_df_campaigns if col in df_campaigns.columns), None)
 
@@ -125,13 +129,14 @@ elif menu == "States and Gender":
     st.plotly_chart(px.bar(
         df_loans.groupby('Assigned_State')['LoanAmount'].mean().reset_index(),
         y='Assigned_State', x='LoanAmount', orientation='h', color='LoanAmount',
-        color_continuous_scale='YlGnBu',
+        color_continuous_scale=COLOR_SEQ,
         title='Average Loan Amount by State'
     ), use_container_width=True)
 
     st.plotly_chart(px.bar(
         df_loans.groupby('Assigned_State')['LoanAmount'].sum().reset_index(),
         x='LoanAmount', y='Assigned_State', orientation='h', color='LoanAmount',
+        color_continuous_scale=COLOR_SEQ,
         title='Total Loan Amount by State'
     ), use_container_width=True)
 
@@ -139,6 +144,7 @@ elif menu == "States and Gender":
     region_gender = df_funnel[df_funnel['Underwriting overall status'] == 'COMPLETED']
     region_gender = region_gender.groupby(['Region', 'Gender']).size().reset_index(name='Count')
     st.plotly_chart(px.bar(region_gender, x='Region', y='Count', color='Gender',
+                           color_discrete_sequence=COLOR_SEQ_DISCRETE,
                            title="Completed Underwriting by Region and Gender"), use_container_width=True)
 
     st.subheader("Completed Underwriting by Region and Gender (Map)")
@@ -153,6 +159,7 @@ elif menu == "States and Gender":
     region_gender = region_gender.dropna()
     st.plotly_chart(px.scatter_map(
         region_gender, lat="Lat", lon="Lon", size="Count", color="Gender",
+        color_discrete_sequence=COLOR_SEQ_DISCRETE,
         hover_name="Region", zoom=4, height=600,
         title="Completed Underwriting by Region and Gender (Map)")
         .update_layout(mapbox_style="open-street-map", margin={"r":0,"t":50,"l":0,"b":0}),
@@ -162,6 +169,7 @@ elif menu == "States and Gender":
     state_gender = df_funnel[df_funnel['Underwriting overall status'] == 'COMPLETED']
     state_gender = state_gender.groupby(['Assigned_State', 'Gender']).size().reset_index(name='Count')
     st.plotly_chart(px.bar(state_gender, x='Assigned_State', y='Count', color='Gender',
+                           color_discrete_sequence=COLOR_SEQ_DISCRETE,
                            title="Completed Underwriting by State and Gender"), use_container_width=True)
 
     st.subheader("Completed Underwriting by State and Gender (Map)")
@@ -185,6 +193,7 @@ elif menu == "States and Gender":
     state_gender = state_gender.dropna()
     st.plotly_chart(px.scatter_map(
         state_gender, lat="Lat", lon="Lon", size="Count", color="Gender",
+        color_discrete_sequence=COLOR_SEQ_DISCRETE,
         hover_name="Assigned_State", zoom=4, height=600,
         title="Completed Underwriting by State and Gender (Map)")
         .update_layout(mapbox_style="open-street-map", margin={"r":0,"t":50,"l":0,"b":0}),
@@ -203,6 +212,8 @@ if menu == "Marketing & Acquisition":
         st.plotly_chart(px.bar(
             channel_data.sort_values(by='Count'),
             y='marketing_channel', x='Count', orientation='h',
+            color='marketing_channel',
+            color_discrete_sequence=COLOR_SEQ_DISCRETE,
             title='Top Marketing Channels by Predicted Loan Conversions'
         ), use_container_width=True)
 
@@ -212,6 +223,8 @@ if menu == "Marketing & Acquisition":
         st.plotly_chart(px.bar(
             subchannel_data.sort_values(by='Count'),
             y='marketing_subchannel', x='Count', orientation='h',
+            color='marketing_subchannel',
+            color_discrete_sequence=COLOR_SEQ_DISCRETE,
             title='Top 10 Marketing Subchannels by Predicted Loan Conversions'
         ), use_container_width=True)
 
@@ -232,7 +245,8 @@ if menu == "Marketing & Acquisition":
             x='Day',
             y='predicted_converters',
             markers=True,
-            title='Predicted Loan Conversions by Day of Week'
+            title='Predicted Loan Conversions by Day of Week',
+            color_discrete_sequence=COLOR_SEQ_DISCRETE
         )
         fig.update_layout(xaxis_title='Day of Week', yaxis_title='Predicted Conversions')
         st.plotly_chart(fig, use_container_width=True)
@@ -256,7 +270,7 @@ elif menu == "Stage Progression":
                  x='COMPLETED Count', y='Status Column', orientation='h',
                  title='Completed Counts Progression for Each Status Column',
                  color='COMPLETED Count',
-                 color_continuous_scale=px.colors.sequential.Viridis)
+                 color_continuous_scale=COLOR_SEQ)
     st.plotly_chart(fig, use_container_width=True)
 
     # Add UOS Approved vs Rejected
@@ -265,6 +279,7 @@ elif menu == "Stage Progression":
     uos_counts.columns = ['Underwriting Status', 'Count']
     fig_uos = px.bar(uos_counts, x='Underwriting Status', y='Count',
                      color='Underwriting Status',
+                     color_discrete_sequence=COLOR_SEQ_DISCRETE,
                      title='UOS Aprobado vs. Rechazado')
     st.plotly_chart(fig_uos, use_container_width=True)
 
@@ -283,6 +298,8 @@ elif menu == "Prediction & ML Model":
     st.plotly_chart(px.bar(
         df_top_paths,
         x='tiene_prestamo', y='acquisition_path', orientation='h',
+        color='acquisition_path',
+        color_discrete_sequence=COLOR_SEQ_DISCRETE,
         title='Top Acquisition Paths by Loan Conversion Rate (%)',
         labels={'tiene_prestamo': 'Loan Conversion Rate (%)', 'acquisition_path': 'Acquisition Path'}
     ), use_container_width=True)
