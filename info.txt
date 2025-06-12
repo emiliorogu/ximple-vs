@@ -1,0 +1,40 @@
+Introduction
+
+Financial inclusion remains a significant challenge for many microentrepreneurs in Latin America, especially women who face limited access to credit, formal employment, and digital tools. Ximple is a fintech platform created to address this issue by offering credit solutions tailored to the needs of underbanked women, known as aliadas, helping them launch and grow their businesses.
+
+
+Context
+
+Our objective is to support Ximple in optimizing its acquisition, onboarding, and loandelivery processes, ensuring that more women can successfully become active clients and access the financial support they need.
+
+Ximple provided two main datasets for this analysis:
+
+· Enrollment Dataset: Includes demographic details, registration progress, and onboarding status of aliadas.
+
+· Channel Dataset: Captures interactions across different acquisition channels, from initial contact to final loan delivery.
+
+
+Problem Statement
+
+Our analysis focused on solving two central questions:
+
+1. How can Ximple improve the acquisition of aliadas through its various channels? We examined the performance of campaigns, sources, and communication channels to understand which strategies drive the highest reach and conversion into active users.
+
+2. What factors influence the successful completion of the onboarding process? By analyzing demographic variables and registration behavior, we aimed to uncover the barriers that prevent aliadas from completing the enrollment process and accessing credit products.
+
+Through data-driven insights, our goal is to help Ximple increase the number of registered aliadas, improve their onboarding experience, and expand their access to loans and financial tools.
+
+
+Conclusions
+
+This project provided valuable insights into the behavior and needs of Ximple’s aliadas throughout the acquisition and onboarding journey. By analyzing the data, we were able to identify key patterns that impact user engagement, registration completion, and loan usage. These findings not only revealed areas where the process can be streamlined but also highlighted the importance of using the right channels at the right stages. Leveraging these insights allows Ximple to make more informed, data-driven decisions to improve reach, increase conversion, and better support the women they aim to empower.
+
+Recommendations
+
+1. Use Paid Social/Facebook campaigns for initial acquisition. These channels are ideal for raising awareness and attracting new users, but should be supported with stronger follow-up strategies to ensure engagement and activation.
+
+2. Prioritize WhatsApp and direct communication as activation channels. These methods show the highest conversion rates. Focus efforts on these channels to guide aliadas through onboarding and toward effective use of loans.
+
+3. Integrate the machine learning model into operational workflows. Implement the model to identify low-probability loans users early, allowing the team to focus resources on those with higher potential for conversion and loan usage.
+
+4. Simplify the onboarding process and provide timely support at key drop-off points. Offering  automated reminders, and personalized assistance at critical steps can significantly improve completion and activation rates. This assistance could come from a button connected to the WhatsApp Channel, due to its higher conversion rate, and lead to a chatbot, which can provide personalized assistance and accessibility to the Aliadas. 
