@@ -14,10 +14,10 @@ st.set_page_config(page_title="Ximple VS Analytics Dashboard", layout="wide")
 st.title("Ximple VS Analytics Dashboard")
 
 # ----------------------------
-# PALETAS DE COLORES UNIFICADAS
+# PALETAS DE COLORES UNIFICADAS (AZUL)
 # ----------------------------
-COLOR_SEQ = px.colors.sequential.Viridis
-COLOR_SEQ_DISCRETE = px.colors.qualitative.Plotly
+COLOR_SEQ = px.colors.sequential.Blues  # Paleta azul para escalas continuas
+COLOR_SEQ_DISCRETE = ['#1f77b4', '#3399e6', '#5dade2', '#85c1e9', '#aed6f1', '#d6eaf8']
 
 # ----------------------------
 # LOAD DATA
