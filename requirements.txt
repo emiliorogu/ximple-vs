@@ -1,0 +1,7 @@
+streamlit==1.45.1
+pandas
+numpy
+matplotlib
+altair
+seaborn
+openpyxl
